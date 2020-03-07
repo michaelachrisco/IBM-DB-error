@@ -1,0 +1,19 @@
+ 
+version: 2
+jobs:
+  build:
+    working_directory: ~/IBM-DB-error
+    docker:
+      - image: circleci/python:3.6
+    parallelism: 1
+    steps:
+      - checkout
+      - run: sudo chown -R circleci:circleci /usr/local/bin
+      - run: sudo chown -R circleci:circleci /usr/local/lib/python3.6/site-packages
+#      - restore_cache:
+#          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+      - run:
+          command: |
+            sudo apt update
+            sudo apt install gcc build-essential
+            pip install ibm-db --user
